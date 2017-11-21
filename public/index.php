@@ -11,12 +11,23 @@ $router = new Router();
 //echo get_class($router);
 
 //lets add some routes in our frontcontroller
-$router->add('', ['controller' => 'Home', 'Action' => 'index']);
+$router->add('', ['controller' => 'Home', 'action' => 'index']);
 $router->add('posts', ['controller' => 'Posts', 'action' => 'index']);
-$router->add('posts/new', ['controller' => 'Post', 'action' => 'new' ]);
+$router->add('posts/new', ['controller' => 'Posts', 'action' => 'new' ]);
 
 //now lets display it
-echo '<pre>';
+/*echo '<pre>';
 var_dump($router->getRoutes());
-echo '</pre>';
+echo '</pre>';*/
+
+//lets match the request route
+$url = $_SERVER['QUERY_STRING'];
+
+if ($router->match($url)) {
+    echo '<pre>';
+    var_dump($router->getParams());
+    echo '</pre>';
+} else {
+    echo "No route found for the URL '$url'";
+}
 ?>
