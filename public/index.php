@@ -1,26 +1,30 @@
 <?php
 
-//build a front controller, its a central entry point that handles request
-//echo 'Requested URL = "' . $_SERVER['QUERY_STRING'] . '"'; 
+/**
+ * Front controller
+ *
+ * PHP version 5.4
+ */
 
-// Routing which controller or action to run based on the routes coming from the URL (routing table)
-require '../core/Router.php';
+/**
+ * Routing
+ */
+require '../Core/Router.php';
 
 $router = new Router();
 
-//echo get_class($router);
-
-//lets add some routes in our frontcontroller
+// Add the routes
 $router->add('', ['controller' => 'Home', 'action' => 'index']);
 $router->add('posts', ['controller' => 'Posts', 'action' => 'index']);
-$router->add('posts/new', ['controller' => 'Posts', 'action' => 'new' ]);
+$router->add('posts/new', ['controller' => 'Posts', 'action' => 'new']);
+    
+// Display the routing table
+//echo '<pre>';
+//var_dump($router->getRoutes());
+//echo '</pre>';
 
-//now lets display it
-/*echo '<pre>';
-var_dump($router->getRoutes());
-echo '</pre>';*/
 
-//lets match the request route
+// Match the requested route
 $url = $_SERVER['QUERY_STRING'];
 
 if ($router->match($url)) {
@@ -28,6 +32,5 @@ if ($router->match($url)) {
     var_dump($router->getParams());
     echo '</pre>';
 } else {
-    echo "No route found for the URL '$url'";
+    echo "No route found for URL '$url'";
 }
-?>
